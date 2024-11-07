@@ -23,7 +23,7 @@ pipeline {
         }
         stage ('echo status') {
             steps {
-                echo()
+                echo(message)
             }
         }
     }
