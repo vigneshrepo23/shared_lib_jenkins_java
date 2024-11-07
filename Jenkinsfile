@@ -13,18 +13,18 @@ pipeline {
         }
         stage ('unit test') {
             steps {
-                unit_test()
+                unitTest()
             }
         }
         stage ('code package') {
             steps {
-                package()
+                codePackage()
             }
         }
-        // stage ('echo status') {
-        //     steps {
-        //         echo()
-        //     }
-        // }
+        stage ('echo status') {
+            steps {
+                echo()
+            }
+        }
     }
 }
