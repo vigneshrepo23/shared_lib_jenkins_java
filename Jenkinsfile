@@ -16,11 +16,11 @@ pipeline {
                 unit_test()
             }
         }
-        stage ('code package') {
-            steps {
-                package()
-            }
-        }
+        // stage ('code package') {
+        //     steps {
+        //         package()
+        //     }
+        // }
         stage ('echo status') {
             steps {
                 echo()
