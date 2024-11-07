@@ -1,3 +1,3 @@
-def call(message) {
+def call() {
     echo 'shared library project done...'
 }

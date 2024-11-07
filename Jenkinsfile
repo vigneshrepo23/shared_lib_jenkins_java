@@ -18,7 +18,7 @@ pipeline {
         }
         stage ('echo status') {
             steps {
-                echoProject()
+                echoMessage()
             }
         }
     }
