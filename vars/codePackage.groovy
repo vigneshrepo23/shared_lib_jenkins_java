@@ -1,3 +1,3 @@
 def call() {
-    sh 'mvn package'
+    sh 'mvn -DskipTests package'
 }

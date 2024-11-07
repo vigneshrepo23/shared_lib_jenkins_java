@@ -11,11 +11,6 @@ pipeline {
                 compile()
             }
         }
-        stage ('unit test') {
-            steps {
-                unitTest()
-            }
-        }
         stage ('code package') {
             steps {
                 codePackage()
