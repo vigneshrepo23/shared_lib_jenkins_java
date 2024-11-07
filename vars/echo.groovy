@@ -1,3 +1,3 @@
 def call(message) {
-    echo 'message'
+    echo 'mission done...'
 }
