@@ -1,24 +1,41 @@
-@Library('my_shared_library') _
+@Library('my_library') _ 
 
 pipeline {
     agent any
     tools {
         maven 'maven3'
+        sonarScanner 'scanner'
+    }
+    environment {
+        userName = 'vigneshrepo23'
+        appName = 'bg'
     }
     stages {
         stage ('code compile') {
             steps {
-                compile()
+                code_compile()
+            }
+        }
+        stage ('unit testing') {
+            steps {
+                unit_test()
+            }
+        }
+        stage ('sonar code analysis') {
+            steps {
+                withSonarQubeEnv('sonarserver') {
+                    sh '''
+                    sonar-scanner \
+                    -Dsonar.projectKey=bgproject \                    
+                    -Dsonar.projectKey=bgkey \
+                    -Dsonar.java.binaries=.                    
+                    '''
+                }
             }
         }
         stage ('code package') {
             steps {
-                codePackage()
-            }
-        }
-        stage ('echo status') {
-            steps {
-                echoMessage()
+                code_package()
             }
         }
     }
