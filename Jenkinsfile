@@ -26,7 +26,7 @@ pipeline {
                 withSonarQubeEnv('sonarserver') {
                     sh '''
                     sonar-scanner \
-                    -Dsonar.projectKey=bgproject \                    
+                    -Dsonar.projectName=bgproject \                    
                     -Dsonar.projectKey=bgkey \
                     -Dsonar.java.binaries=.                    
                     '''
