@@ -43,5 +43,10 @@ pipeline {
                 docker_build()
             }
         }
+        stage ('run app') {
+            steps {
+                app_run()
+            }
+        }
     }
 }
