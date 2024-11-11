@@ -1,7 +1,7 @@
 FROM maven:3.8-openjdk-17 as build
 WORKDIR /app
 COPY pom.xml . 
-COPY src .
+COPY src ./src
 RUN mvn package
 
 FROM openjdk:17-jdk-slim
