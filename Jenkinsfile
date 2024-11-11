@@ -4,7 +4,7 @@ pipeline {
     agent any
     tools {
         maven 'maven3'
-        sonarQubeScanner 'scanner'
+        sonarScanner 'scanner' 
     }
     environment {
         userName = 'vigneshrepo23'
