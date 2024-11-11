@@ -4,11 +4,11 @@ pipeline {
     agent any
     tools {
         maven 'maven3'
-        sonarScanner 'scanner' 
     }
     environment {
         userName = 'vigneshrepo23'
         appName = 'bg'
+        scannerHome = tool 'scanner'
     }
     stages {
         stage ('code compile') {
@@ -25,7 +25,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('sonarserver') {
                     sh '''
-                    sonar-scanner \
+                    $scannerHome/bin/sonar-scanner \
                     -Dsonar.projectName=bgproject \
                     -Dsonar.projectKey=bgkey \
                     -Dsonar.java.binaries=target/classes
