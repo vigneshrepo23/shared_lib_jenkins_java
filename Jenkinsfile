@@ -38,5 +38,10 @@ pipeline {
                 code_package()
             }
         }
+        stage ('docker image build') {
+            steps {
+                docker_build()
+            }
+        }
     }
 }
