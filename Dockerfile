@@ -1,11 +1,11 @@
-FROM maven:3.8-openjdk-17 as build
+FROM maven:3.9.9-amazoncorretto-8-alpine as build
 WORKDIR /app
-COPY pom.xml . 
-COPY src ./src
+COPY pom.xml .
+COPY /src ./src
 RUN mvn package
 
-FROM openjdk:17-jdk-slim
+FROM openjdk:19-jdk-alpine3.15
 WORKDIR /app
-COPY --from=build /app/target/*.jar bg.jar
+COPY --from=build target/*jar bg.jar
 EXPOSE 8080
-CMD ["java", "-jar", "bg.jar"]
+CMD [ "java", "-jar", "bg.jar" ]

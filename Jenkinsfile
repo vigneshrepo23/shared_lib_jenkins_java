@@ -1,24 +1,36 @@
-@Library('my_library') _ 
+//@Library('mylib') _
 
 pipeline {
-    agent any
+    agent {
+        label 'agent'
+    }
     tools {
         maven 'maven3'
     }
     environment {
-        userName = 'vigneshrepo23'
-        appName = 'bg'
-        scannerHome = tool 'scanner'
+        userName='vigneshrepo23'
+        imgName='bg'
+        scannerHome=tool'scanner'
     }
     stages {
-        stage ('code compile') {
+        stage ('clean workspace') {
             steps {
-                code_compile()
+                cleanWs()
             }
         }
-        stage ('unit testing') {
+        stage ('git checkout') {
             steps {
-                unit_test()
+                git url:'https://github.com/vigneshrepo23/shared_lib_jenkins_java.git', branch:'master'
+            }
+        }
+        stage ('compile') {
+            steps {
+                sh 'mvn compile'
+            }
+        }
+        stage ('unit test') {
+            steps {
+                sh 'mvn test'
             }
         }
         stage ('sonar code analysis') {
@@ -26,26 +38,26 @@ pipeline {
                 withSonarQubeEnv('sonarserver') {
                     sh '''
                     $scannerHome/bin/sonar-scanner \
-                    -Dsonar.projectName=bgproject \
+                    -Dsonar.projectName=bg \
                     -Dsonar.projectKey=bgkey \
-                    -Dsonar.java.binaries=target/classes
+                    -Dsonar.java.binaries=. 
                     '''
                 }
             }
         }
         stage ('code package') {
             steps {
-                code_package()
+                sh 'mvn package'
             }
         }
         stage ('docker image build') {
             steps {
-                docker_build()
+                sh 'docker build -t $userName/$imgName .'
             }
         }
-        stage ('run app') {
+        stage ('trivy scan') {
             steps {
-                app_run()
+                sh 'trivy image $userName/$imgName -f table -o image_report'
             }
         }
     }
